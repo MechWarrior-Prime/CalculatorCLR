@@ -3,7 +3,7 @@
 /*
 	Calculator for CLR
 	Frank G. Dahncke
-	Build 0003
+	Build 0005
 	11-FEB-2020	1.0	creation
 	12-FEB-2020	1.1	faculty
 */
