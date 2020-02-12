@@ -52,6 +52,8 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::Button^ btnFac;
 	private: System::Diagnostics::PerformanceCounter^ perfcCPU;
 	private: System::Windows::Forms::Timer^ tmrPerfCounter;
+	private: System::Windows::Forms::ToolTip^ toolTipMain;
+
 	private: System::ComponentModel::IContainer^ components;
 
 	private:
@@ -83,6 +85,7 @@ namespace CalculatorCLR {
 			this->btnFac = (gcnew System::Windows::Forms::Button());
 			this->perfcCPU = (gcnew System::Diagnostics::PerformanceCounter());
 			this->tmrPerfCounter = (gcnew System::Windows::Forms::Timer(this->components));
+			this->toolTipMain = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->statusStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
 			this->SuspendLayout();
@@ -104,17 +107,18 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel1
 			//
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(180, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(211, 17);
 			this->toolStripStatusLabel1->Spring = true;
 			this->toolStripStatusLabel1->Text = L"Total CPU Usage in %: ";
 			this->toolStripStatusLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			//
 			// toolStripProgressBar1
 			//
+			this->toolStripProgressBar1->AutoToolTip = true;
 			this->toolStripProgressBar1->Name = L"toolStripProgressBar1";
 			this->toolStripProgressBar1->Size = System::Drawing::Size(100, 16);
 			this->toolStripProgressBar1->Style = System::Windows::Forms::ProgressBarStyle::Continuous;
-			this->toolStripProgressBar1->ToolTipText = L"Progress:";
+			this->toolStripProgressBar1->ToolTipText = L"Current usage of total processing power";
 			//
 			// btnAdd
 			//
@@ -126,6 +130,7 @@ namespace CalculatorCLR {
 			this->btnAdd->Size = System::Drawing::Size(33, 38);
 			this->btnAdd->TabIndex = 1;
 			this->btnAdd->Text = L"+";
+			this->toolTipMain->SetToolTip(this->btnAdd, L"Addition");
 			this->btnAdd->UseMnemonic = false;
 			this->btnAdd->UseVisualStyleBackColor = true;
 			this->btnAdd->Click += gcnew System::EventHandler(this, &frmMain::btnAdd_Click);
@@ -140,6 +145,7 @@ namespace CalculatorCLR {
 			this->btnSub->Size = System::Drawing::Size(33, 38);
 			this->btnSub->TabIndex = 2;
 			this->btnSub->Text = L"-";
+			this->toolTipMain->SetToolTip(this->btnSub, L"Subtraction");
 			this->btnSub->UseMnemonic = false;
 			this->btnSub->UseVisualStyleBackColor = true;
 			this->btnSub->Click += gcnew System::EventHandler(this, &frmMain::btnSub_Click_1);
@@ -154,6 +160,7 @@ namespace CalculatorCLR {
 			this->btnMult->Size = System::Drawing::Size(33, 38);
 			this->btnMult->TabIndex = 3;
 			this->btnMult->Text = L"*";
+			this->toolTipMain->SetToolTip(this->btnMult, L"Multiplication");
 			this->btnMult->UseMnemonic = false;
 			this->btnMult->UseVisualStyleBackColor = true;
 			this->btnMult->Click += gcnew System::EventHandler(this, &frmMain::btnMult_Click_1);
@@ -168,6 +175,7 @@ namespace CalculatorCLR {
 			this->btnDiv->Size = System::Drawing::Size(33, 38);
 			this->btnDiv->TabIndex = 4;
 			this->btnDiv->Text = L"/";
+			this->toolTipMain->SetToolTip(this->btnDiv, L"Division");
 			this->btnDiv->UseMnemonic = false;
 			this->btnDiv->UseVisualStyleBackColor = true;
 			this->btnDiv->Click += gcnew System::EventHandler(this, &frmMain::btnDiv_Click_1);
@@ -182,6 +190,7 @@ namespace CalculatorCLR {
 			this->txtOne->TabIndex = 5;
 			this->txtOne->Text = L"0";
 			this->txtOne->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->toolTipMain->SetToolTip(this->txtOne, L"First number");
 			//
 			// txtTwo
 			//
@@ -193,6 +202,7 @@ namespace CalculatorCLR {
 			this->txtTwo->TabIndex = 6;
 			this->txtTwo->Text = L"0";
 			this->txtTwo->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->toolTipMain->SetToolTip(this->txtTwo, L"Second number. Only used if the operation requires it.");
 			//
 			// txtResult
 			//
@@ -208,6 +218,7 @@ namespace CalculatorCLR {
 			this->txtResult->TabIndex = 7;
 			this->txtResult->Text = L"0";
 			this->txtResult->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->toolTipMain->SetToolTip(this->txtResult, L"Result goes here");
 			this->txtResult->WordWrap = false;
 			//
 			// btnSQRT
@@ -220,6 +231,7 @@ namespace CalculatorCLR {
 			this->btnSQRT->Size = System::Drawing::Size(33, 38);
 			this->btnSQRT->TabIndex = 8;
 			this->btnSQRT->Text = L"√";
+			this->toolTipMain->SetToolTip(this->btnSQRT, L"Square Root");
 			this->btnSQRT->UseMnemonic = false;
 			this->btnSQRT->UseVisualStyleBackColor = true;
 			this->btnSQRT->Click += gcnew System::EventHandler(this, &frmMain::btnSQRT_Click_1);
@@ -234,6 +246,7 @@ namespace CalculatorCLR {
 			this->button1->Size = System::Drawing::Size(228, 38);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"&CLR";
+			this->toolTipMain->SetToolTip(this->button1, L"Clears all fields.");
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &frmMain::button1_Click);
 			//
@@ -247,6 +260,7 @@ namespace CalculatorCLR {
 			this->btnFac->Size = System::Drawing::Size(33, 38);
 			this->btnFac->TabIndex = 10;
 			this->btnFac->Text = L"!";
+			this->toolTipMain->SetToolTip(this->btnFac, L"Faculty");
 			this->btnFac->UseMnemonic = false;
 			this->btnFac->UseVisualStyleBackColor = true;
 			this->btnFac->Click += gcnew System::EventHandler(this, &frmMain::btnFac_Click);
@@ -262,6 +276,14 @@ namespace CalculatorCLR {
 			this->tmrPerfCounter->Enabled = true;
 			this->tmrPerfCounter->Interval = 1000;
 			this->tmrPerfCounter->Tick += gcnew System::EventHandler(this, &frmMain::tmrPerfCounter_Tick);
+			//
+			// toolTipMain
+			//
+			this->toolTipMain->AutoPopDelay = 5000;
+			this->toolTipMain->InitialDelay = 800;
+			this->toolTipMain->IsBalloon = true;
+			this->toolTipMain->ReshowDelay = 100;
+			this->toolTipMain->ToolTipTitle = L"Calculator CLR";
 			//
 			// frmMain
 			//
