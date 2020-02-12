@@ -50,12 +50,14 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::Button^ btnSQRT;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ btnFac;
+	private: System::Diagnostics::PerformanceCounter^ perfcCPU;
+	private: System::Windows::Forms::Timer^ tmrPerfCounter;
+	private: System::ComponentModel::IContainer^ components;
 
 	private:
 		/// <summary>
 		/// Erforderliche Designervariable.
 		/// </summary>
-		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -64,6 +66,7 @@ namespace CalculatorCLR {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(frmMain::typeid));
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->toolStripStatusLabel1 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
@@ -78,7 +81,10 @@ namespace CalculatorCLR {
 			this->btnSQRT = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->btnFac = (gcnew System::Windows::Forms::Button());
+			this->perfcCPU = (gcnew System::Diagnostics::PerformanceCounter());
+			this->tmrPerfCounter = (gcnew System::Windows::Forms::Timer(this->components));
 			this->statusStrip1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
 			this->SuspendLayout();
 			//
 			// statusStrip1
@@ -98,16 +104,16 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel1
 			//
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(211, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(180, 17);
 			this->toolStripStatusLabel1->Spring = true;
-			this->toolStripStatusLabel1->Text = L"Status:";
+			this->toolStripStatusLabel1->Text = L"Total CPU Usage in %: ";
 			this->toolStripStatusLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			//
 			// toolStripProgressBar1
 			//
 			this->toolStripProgressBar1->Name = L"toolStripProgressBar1";
 			this->toolStripProgressBar1->Size = System::Drawing::Size(100, 16);
-			this->toolStripProgressBar1->Style = System::Windows::Forms::ProgressBarStyle::Marquee;
+			this->toolStripProgressBar1->Style = System::Windows::Forms::ProgressBarStyle::Continuous;
 			this->toolStripProgressBar1->ToolTipText = L"Progress:";
 			//
 			// btnAdd
@@ -245,6 +251,18 @@ namespace CalculatorCLR {
 			this->btnFac->UseVisualStyleBackColor = true;
 			this->btnFac->Click += gcnew System::EventHandler(this, &frmMain::btnFac_Click);
 			//
+			// perfcCPU
+			//
+			this->perfcCPU->CategoryName = L"Processor";
+			this->perfcCPU->CounterName = L"% Processor Time";
+			this->perfcCPU->InstanceName = L"_Total";
+			//
+			// tmrPerfCounter
+			//
+			this->tmrPerfCounter->Enabled = true;
+			this->tmrPerfCounter->Interval = 1000;
+			this->tmrPerfCounter->Tick += gcnew System::EventHandler(this, &frmMain::tmrPerfCounter_Tick);
+			//
 			// frmMain
 			//
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -270,6 +288,7 @@ namespace CalculatorCLR {
 			this->Text = L"Technocalc CLR";
 			this->statusStrip1->ResumeLayout(false);
 			this->statusStrip1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 		}
@@ -316,6 +335,9 @@ namespace CalculatorCLR {
 		unsigned luOne = unsigned::Parse(txtOne->Text);
 		txtTwo->Text = "0";
 		txtResult->Text = (faculty(luOne)).ToString();
+	}
+	private: System::Void tmrPerfCounter_Tick(System::Object^ sender, System::EventArgs^ e) {
+		toolStripProgressBar1->Value = perfcCPU->NextValue();
 	}
 	};
 }
