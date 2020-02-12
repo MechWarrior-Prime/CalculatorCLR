@@ -57,6 +57,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::Button^ btnLn;
 	private: System::Windows::Forms::ContextMenuStrip^ cmsClipboard;
 	private: System::Windows::Forms::ToolStripMenuItem^ tsmiClipboard;
+	private: System::Windows::Forms::Button^ btnLog10;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -85,6 +86,8 @@ namespace CalculatorCLR {
 			this->txtOne = (gcnew System::Windows::Forms::TextBox());
 			this->txtTwo = (gcnew System::Windows::Forms::TextBox());
 			this->txtResult = (gcnew System::Windows::Forms::TextBox());
+			this->cmsClipboard = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->tsmiClipboard = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->btnSQRT = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->btnFac = (gcnew System::Windows::Forms::Button());
@@ -92,11 +95,10 @@ namespace CalculatorCLR {
 			this->tmrPerfCounter = (gcnew System::Windows::Forms::Timer(this->components));
 			this->toolTipMain = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->btnLn = (gcnew System::Windows::Forms::Button());
-			this->cmsClipboard = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
-			this->tsmiClipboard = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->btnLog10 = (gcnew System::Windows::Forms::Button());
 			this->statusStrip1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
 			this->cmsClipboard->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
 			this->SuspendLayout();
 			//
 			// statusStrip1
@@ -108,7 +110,7 @@ namespace CalculatorCLR {
 			this->statusStrip1->Location = System::Drawing::Point(0, 206);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->ShowItemToolTips = true;
-			this->statusStrip1->Size = System::Drawing::Size(386, 22);
+			this->statusStrip1->Size = System::Drawing::Size(422, 22);
 			this->statusStrip1->SizingGrip = false;
 			this->statusStrip1->TabIndex = 0;
 			this->statusStrip1->Text = L"Status";
@@ -116,7 +118,7 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel1
 			//
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(134, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(152, 17);
 			this->toolStripStatusLabel1->Spring = true;
 			this->toolStripStatusLabel1->Text = L"Total CPU Usage in %: ";
 			this->toolStripStatusLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -132,7 +134,7 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel2
 			//
 			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(134, 17);
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(152, 17);
 			this->toolStripStatusLabel2->Spring = true;
 			this->toolStripStatusLabel2->Text = L"©2020 Frank G. Dahncke";
 			this->toolStripStatusLabel2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -203,7 +205,7 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->txtOne->Location = System::Drawing::Point(58, 12);
 			this->txtOne->Name = L"txtOne";
-			this->txtOne->Size = System::Drawing::Size(132, 35);
+			this->txtOne->Size = System::Drawing::Size(150, 35);
 			this->txtOne->TabIndex = 5;
 			this->txtOne->Text = L"0";
 			this->txtOne->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -213,9 +215,9 @@ namespace CalculatorCLR {
 			//
 			this->txtTwo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txtTwo->Location = System::Drawing::Point(196, 12);
+			this->txtTwo->Location = System::Drawing::Point(214, 12);
 			this->txtTwo->Name = L"txtTwo";
-			this->txtTwo->Size = System::Drawing::Size(129, 35);
+			this->txtTwo->Size = System::Drawing::Size(150, 35);
 			this->txtTwo->TabIndex = 6;
 			this->txtTwo->Text = L"0";
 			this->txtTwo->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -232,12 +234,29 @@ namespace CalculatorCLR {
 			this->txtResult->ReadOnly = true;
 			this->txtResult->ScrollBars = System::Windows::Forms::ScrollBars::Both;
 			this->txtResult->ShortcutsEnabled = false;
-			this->txtResult->Size = System::Drawing::Size(267, 62);
+			this->txtResult->Size = System::Drawing::Size(306, 62);
 			this->txtResult->TabIndex = 7;
 			this->txtResult->Text = L"0";
 			this->txtResult->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
 			this->toolTipMain->SetToolTip(this->txtResult, L"Result goes here");
 			this->txtResult->WordWrap = false;
+			//
+			// cmsClipboard
+			//
+			this->cmsClipboard->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiClipboard });
+			this->cmsClipboard->Name = L"cmsClipboard";
+			this->cmsClipboard->Size = System::Drawing::Size(135, 26);
+			this->toolTipMain->SetToolTip(this->cmsClipboard, L"Copy result to clipboard");
+			this->cmsClipboard->Opening += gcnew System::ComponentModel::CancelEventHandler(this, &frmMain::cmsClipboard_Opening);
+			//
+			// tsmiClipboard
+			//
+			this->tsmiClipboard->AutoToolTip = true;
+			this->tsmiClipboard->Name = L"tsmiClipboard";
+			this->tsmiClipboard->Size = System::Drawing::Size(134, 22);
+			this->tsmiClipboard->Text = L"Copy result";
+			this->tsmiClipboard->ToolTipText = L"copies the current result to the clipboard";
+			this->tsmiClipboard->Click += gcnew System::EventHandler(this, &frmMain::tsmiClipboard_Click);
 			//
 			// btnSQRT
 			//
@@ -261,7 +280,7 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(58, 165);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(267, 38);
+			this->button1->Size = System::Drawing::Size(306, 38);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"&CLR";
 			this->toolTipMain->SetToolTip(this->button1, L"Clears all fields.");
@@ -318,28 +337,28 @@ namespace CalculatorCLR {
 			this->btnLn->UseVisualStyleBackColor = true;
 			this->btnLn->Click += gcnew System::EventHandler(this, &frmMain::btnLn_Click);
 			//
-			// cmsClipboard
+			// btnLog10
 			//
-			this->cmsClipboard->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiClipboard });
-			this->cmsClipboard->Name = L"cmsClipboard";
-			this->cmsClipboard->Size = System::Drawing::Size(135, 26);
-			this->toolTipMain->SetToolTip(this->cmsClipboard, L"Copy result to clipboard");
-			this->cmsClipboard->Opening += gcnew System::ComponentModel::CancelEventHandler(this, &frmMain::cmsClipboard_Opening);
-			//
-			// tsmiClipboard
-			//
-			this->tsmiClipboard->AutoToolTip = true;
-			this->tsmiClipboard->Name = L"tsmiClipboard";
-			this->tsmiClipboard->Size = System::Drawing::Size(134, 22);
-			this->tsmiClipboard->Text = L"Copy result";
-			this->tsmiClipboard->ToolTipText = L"copies the current result to the clipboard";
-			this->tsmiClipboard->Click += gcnew System::EventHandler(this, &frmMain::tsmiClipboard_Click);
+			this->btnLog10->FlatStyle = System::Windows::Forms::FlatStyle::System;
+			this->btnLog10->Font = (gcnew System::Drawing::Font(L"Courier New", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnLog10->Location = System::Drawing::Point(331, 53);
+			this->btnLog10->Name = L"btnLog10";
+			this->btnLog10->Size = System::Drawing::Size(33, 38);
+			this->btnLog10->TabIndex = 12;
+			this->btnLog10->Text = L"lg";
+			this->toolTipMain->SetToolTip(this->btnLog10, L"logarithm to base of 10");
+			this->btnLog10->UseMnemonic = false;
+			this->btnLog10->UseVisualStyleBackColor = true;
+			this->btnLog10->Click += gcnew System::EventHandler(this, &frmMain::btnLog10_Click);
 			//
 			// frmMain
 			//
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(386, 228);
+			this->BackColor = System::Drawing::SystemColors::Control;
+			this->ClientSize = System::Drawing::Size(422, 228);
+			this->Controls->Add(this->btnLog10);
 			this->Controls->Add(this->btnLn);
 			this->Controls->Add(this->btnFac);
 			this->Controls->Add(this->button1);
@@ -357,12 +376,13 @@ namespace CalculatorCLR {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"frmMain";
+			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Technocalc CLR";
 			this->statusStrip1->ResumeLayout(false);
 			this->statusStrip1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->EndInit();
 			this->cmsClipboard->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 		}
@@ -423,8 +443,13 @@ namespace CalculatorCLR {
 	}
 	private: System::Void cmsClipboard_Opening(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 	}
-private: System::Void tsmiClipboard_Click(System::Object^ sender, System::EventArgs^ e) {
-	Clipboard::SetDataObject(txtResult->Text, true);
-}
-};
+	private: System::Void tsmiClipboard_Click(System::Object^ sender, System::EventArgs^ e) {
+		Clipboard::SetDataObject(txtResult->Text, true);
+	}
+	private: System::Void btnLog10_Click(System::Object^ sender, System::EventArgs^ e) {
+		double ldOne = double::Parse(txtOne->Text);
+		txtTwo->Text = "0";
+		txtResult->Text = (log10(ldOne)).ToString();
+	}
+	};
 }
