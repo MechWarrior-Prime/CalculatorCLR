@@ -1,8 +1,9 @@
 #include "frmMain.h"
-
+#include "functions.h"
 /*
 	Calculator for CLR
 	Frank G. Dahncke
+	Build 0003
 	11-FEB-2020	1.0	creation
 	12-FEB-2020	1.1	faculty
 */
