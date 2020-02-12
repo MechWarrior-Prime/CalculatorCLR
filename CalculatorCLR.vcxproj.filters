@@ -26,5 +26,8 @@
     <ClInclude Include="frmMain.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="functions.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

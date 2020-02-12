@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <math.h>
+#include "functions.h"
+
 namespace CalculatorCLR {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -47,6 +49,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::TextBox^ txtResult;
 	private: System::Windows::Forms::Button^ btnSQRT;
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ btnFac;
 
 	private:
 		/// <summary>
@@ -73,6 +76,7 @@ namespace CalculatorCLR {
 			this->txtResult = (gcnew System::Windows::Forms::TextBox());
 			this->btnSQRT = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->btnFac = (gcnew System::Windows::Forms::Button());
 			this->statusStrip1->SuspendLayout();
 			this->SuspendLayout();
 			//
@@ -85,7 +89,7 @@ namespace CalculatorCLR {
 			this->statusStrip1->Location = System::Drawing::Point(0, 182);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->ShowItemToolTips = true;
-			this->statusStrip1->Size = System::Drawing::Size(283, 22);
+			this->statusStrip1->Size = System::Drawing::Size(328, 22);
 			this->statusStrip1->SizingGrip = false;
 			this->statusStrip1->TabIndex = 0;
 			this->statusStrip1->Text = L"Status";
@@ -93,7 +97,7 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel1
 			//
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(166, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(211, 17);
 			this->toolStripStatusLabel1->Spring = true;
 			this->toolStripStatusLabel1->Text = L"Status:";
 			this->toolStripStatusLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -167,7 +171,7 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->txtOne->Location = System::Drawing::Point(49, 12);
 			this->txtOne->Name = L"txtOne";
-			this->txtOne->Size = System::Drawing::Size(91, 35);
+			this->txtOne->Size = System::Drawing::Size(111, 35);
 			this->txtOne->TabIndex = 5;
 			this->txtOne->Text = L"0";
 			this->txtOne->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -176,9 +180,9 @@ namespace CalculatorCLR {
 			//
 			this->txtTwo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txtTwo->Location = System::Drawing::Point(146, 12);
+			this->txtTwo->Location = System::Drawing::Point(166, 12);
 			this->txtTwo->Name = L"txtTwo";
-			this->txtTwo->Size = System::Drawing::Size(92, 35);
+			this->txtTwo->Size = System::Drawing::Size(111, 35);
 			this->txtTwo->TabIndex = 6;
 			this->txtTwo->Text = L"0";
 			this->txtTwo->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -190,7 +194,7 @@ namespace CalculatorCLR {
 			this->txtResult->Location = System::Drawing::Point(49, 97);
 			this->txtResult->Name = L"txtResult";
 			this->txtResult->ReadOnly = true;
-			this->txtResult->Size = System::Drawing::Size(189, 35);
+			this->txtResult->Size = System::Drawing::Size(228, 35);
 			this->txtResult->TabIndex = 7;
 			this->txtResult->Text = L"0";
 			this->txtResult->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -216,17 +220,32 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(49, 141);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(189, 38);
+			this->button1->Size = System::Drawing::Size(228, 38);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"&CLR";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &frmMain::button1_Click);
 			//
+			// btnFac
+			//
+			this->btnFac->FlatStyle = System::Windows::Forms::FlatStyle::System;
+			this->btnFac->Font = (gcnew System::Drawing::Font(L"Courier New", 24, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnFac->Location = System::Drawing::Point(244, 53);
+			this->btnFac->Name = L"btnFac";
+			this->btnFac->Size = System::Drawing::Size(33, 38);
+			this->btnFac->TabIndex = 10;
+			this->btnFac->Text = L"!";
+			this->btnFac->UseMnemonic = false;
+			this->btnFac->UseVisualStyleBackColor = true;
+			this->btnFac->Click += gcnew System::EventHandler(this, &frmMain::btnFac_Click);
+			//
 			// frmMain
 			//
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(283, 204);
+			this->ClientSize = System::Drawing::Size(328, 204);
+			this->Controls->Add(this->btnFac);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnSQRT);
 			this->Controls->Add(this->txtResult);
@@ -278,6 +297,19 @@ namespace CalculatorCLR {
 		txtOne->Text = "0";
 		txtTwo->Text = "0";
 		txtResult->Text = "0";
+	}
+
+		   //UInt64 fac(unsigned int n)
+		   //{
+			  // if (n == 0)
+				 //  return 1;
+			  // else
+				 //  return n * fac(n - 1);
+		   //}
+	private: System::Void btnFac_Click(System::Object^ sender, System::EventArgs^ e) {
+		unsigned luOne = unsigned::Parse(txtOne->Text);
+		txtTwo->Text = "0";
+		txtResult->Text = (faculty(luOne)).ToString();
 	}
 	};
 }

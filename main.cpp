@@ -1,5 +1,11 @@
 #include "frmMain.h"
 
+/*
+	Calculator for CLR
+	Frank G. Dahncke
+	11-FEB-2020	1.0	creation
+	12-FEB-2020	1.1	faculty
+*/
 using namespace System;
 using namespace System::Windows::Forms;
 
