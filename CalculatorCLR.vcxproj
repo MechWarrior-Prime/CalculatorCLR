@@ -116,7 +116,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="frmInfo.cpp" />
     <ClCompile Include="frmMain.cpp" />
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,12 +129,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="frmInfo.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="frmMain.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="functions.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmInfo.resx">
+      <DependentUpon>frmInfo.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.h</DependentUpon>
     </EmbeddedResource>

@@ -3,9 +3,11 @@
 /*
 	Calculator for CLR
 	Frank G. Dahncke
-	Build 0006
-	11-FEB-2020	1.0	creation
-	12-FEB-2020	1.1	faculty
+	Build 0008
+	11-FEB-2020	1.0		creation
+	12-FEB-2020	1.1		faculty
+	13-FEB-2020 1.2		info window
+	13-FEB-2020	1.2.1	input error handling
 */
 using namespace System;
 using namespace System::Windows::Forms;

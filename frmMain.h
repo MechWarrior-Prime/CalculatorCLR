@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <math.h>
-//#include "functions.h"
+#include "functions.h"
+#include "frmInfo.h"
 
 namespace CalculatorCLR {
 	using namespace System;
@@ -58,6 +59,9 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::ContextMenuStrip^ cmsClipboard;
 	private: System::Windows::Forms::ToolStripMenuItem^ tsmiClipboard;
 	private: System::Windows::Forms::Button^ btnLog10;
+	private: System::Windows::Forms::MenuStrip^ msMain;
+	private: System::Windows::Forms::ToolStripMenuItem^ tsmiInfo;
+	private: System::Windows::Forms::ErrorProvider^ errorProviderMain;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -96,9 +100,14 @@ namespace CalculatorCLR {
 			this->toolTipMain = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->btnLn = (gcnew System::Windows::Forms::Button());
 			this->btnLog10 = (gcnew System::Windows::Forms::Button());
+			this->msMain = (gcnew System::Windows::Forms::MenuStrip());
+			this->tsmiInfo = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->errorProviderMain = (gcnew System::Windows::Forms::ErrorProvider(this->components));
 			this->statusStrip1->SuspendLayout();
 			this->cmsClipboard->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
+			this->msMain->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->errorProviderMain))->BeginInit();
 			this->SuspendLayout();
 			//
 			// statusStrip1
@@ -107,7 +116,7 @@ namespace CalculatorCLR {
 				this->toolStripStatusLabel1,
 					this->toolStripProgressBar1, this->toolStripStatusLabel2
 			});
-			this->statusStrip1->Location = System::Drawing::Point(0, 206);
+			this->statusStrip1->Location = System::Drawing::Point(0, 249);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->ShowItemToolTips = true;
 			this->statusStrip1->Size = System::Drawing::Size(422, 22);
@@ -210,6 +219,8 @@ namespace CalculatorCLR {
 			this->txtOne->Text = L"0";
 			this->txtOne->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
 			this->toolTipMain->SetToolTip(this->txtOne, L"First number");
+			this->txtOne->WordWrap = false;
+			this->txtOne->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &frmMain::txtOne_Validating);
 			//
 			// txtTwo
 			//
@@ -352,12 +363,34 @@ namespace CalculatorCLR {
 			this->btnLog10->UseVisualStyleBackColor = true;
 			this->btnLog10->Click += gcnew System::EventHandler(this, &frmMain::btnLog10_Click);
 			//
+			// msMain
+			//
+			this->msMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiInfo });
+			this->msMain->Location = System::Drawing::Point(0, 0);
+			this->msMain->Name = L"msMain";
+			this->msMain->Size = System::Drawing::Size(422, 24);
+			this->msMain->TabIndex = 13;
+			this->msMain->Text = L"menuStrip1";
+			//
+			// tsmiInfo
+			//
+			this->tsmiInfo->Name = L"tsmiInfo";
+			this->tsmiInfo->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Alt | System::Windows::Forms::Keys::I));
+			this->tsmiInfo->Size = System::Drawing::Size(40, 20);
+			this->tsmiInfo->Text = L"&Info";
+			this->tsmiInfo->ToolTipText = L"Displays additional info about this program";
+			this->tsmiInfo->Click += gcnew System::EventHandler(this, &frmMain::tsmiInfo_Click);
+			//
+			// errorProviderMain
+			//
+			this->errorProviderMain->ContainerControl = this;
+			//
 			// frmMain
 			//
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(422, 228);
+			this->ClientSize = System::Drawing::Size(422, 271);
 			this->Controls->Add(this->btnLog10);
 			this->Controls->Add(this->btnLn);
 			this->Controls->Add(this->btnFac);
@@ -371,9 +404,11 @@ namespace CalculatorCLR {
 			this->Controls->Add(this->btnSub);
 			this->Controls->Add(this->btnAdd);
 			this->Controls->Add(this->statusStrip1);
+			this->Controls->Add(this->msMain);
 			this->DoubleBuffered = true;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MainMenuStrip = this->msMain;
 			this->MaximizeBox = false;
 			this->Name = L"frmMain";
 			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
@@ -383,6 +418,9 @@ namespace CalculatorCLR {
 			this->statusStrip1->PerformLayout();
 			this->cmsClipboard->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->EndInit();
+			this->msMain->ResumeLayout(false);
+			this->msMain->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->errorProviderMain))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 		}
@@ -418,13 +456,13 @@ namespace CalculatorCLR {
 		txtResult->Text = "0";
 	}
 
-		   UInt64 faculty(unsigned int n)
-		   {
-			   if (n == 0)
-				   return 1;
-			   else
-				   return n * faculty(n - 1);
-		   }
+		   //UInt64 faculty(unsigned int n)
+		   //{
+			  // if (n == 0)
+				 //  return 1;
+			  // else
+				 //  return n * faculty(n - 1);
+		   //}
 	private: System::Void btnFac_Click(System::Object^ sender, System::EventArgs^ e) {
 		unsigned luOne = unsigned::Parse(txtOne->Text);
 		txtTwo->Text = "0";
@@ -450,6 +488,28 @@ namespace CalculatorCLR {
 		double ldOne = double::Parse(txtOne->Text);
 		txtTwo->Text = "0";
 		txtResult->Text = (log10(ldOne)).ToString();
+	}
+	private: System::Void tsmiInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+		MessageBox::Show("Info coming up!", "Techno says", MessageBoxButtons::OK);
+		Form^ info = gcnew frmInfo;
+		//info->Parent = frmMain::Handle;
+		info->StartPosition = FormStartPosition::CenterParent;
+		info->Show();
+	}
+	private: System::Void txtOne_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		if (!IsNumeric(txtOne->Text)) {
+			// Cancel the event and select the text to be corrected by the user.
+
+			e->Cancel = true;
+			txtOne->Select(0, txtOne->Text->Length);
+
+			// Set the ErrorProvider error with the text to display.
+
+			frmMain::errorProviderMain->SetError(txtOne, "Invalid input. Numbers only!");
+		}
+		else {
+			frmMain::errorProviderMain->Clear();
+		}
 	}
 	};
 }
