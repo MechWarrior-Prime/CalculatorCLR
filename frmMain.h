@@ -62,6 +62,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::MenuStrip^ msMain;
 	private: System::Windows::Forms::ToolStripMenuItem^ tsmiInfo;
 	private: System::Windows::Forms::ErrorProvider^ errorProviderMain;
+	private: System::Windows::Forms::CheckBox^ chkOnTop;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -103,6 +104,7 @@ namespace CalculatorCLR {
 			this->msMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->tsmiInfo = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->errorProviderMain = (gcnew System::Windows::Forms::ErrorProvider(this->components));
+			this->chkOnTop = (gcnew System::Windows::Forms::CheckBox());
 			this->statusStrip1->SuspendLayout();
 			this->cmsClipboard->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
@@ -385,12 +387,26 @@ namespace CalculatorCLR {
 			//
 			this->errorProviderMain->ContainerControl = this;
 			//
+			// chkOnTop
+			//
+			this->chkOnTop->AutoSize = true;
+			this->chkOnTop->FlatStyle = System::Windows::Forms::FlatStyle::System;
+			this->chkOnTop->Location = System::Drawing::Point(62, 211);
+			this->chkOnTop->Name = L"chkOnTop";
+			this->chkOnTop->Size = System::Drawing::Size(84, 18);
+			this->chkOnTop->TabIndex = 14;
+			this->chkOnTop->Text = L"&stay on top";
+			this->toolTipMain->SetToolTip(this->chkOnTop, L"if checked, makes the calculator window stay above all others");
+			this->chkOnTop->UseVisualStyleBackColor = true;
+			this->chkOnTop->CheckedChanged += gcnew System::EventHandler(this, &frmMain::chkOnTop_CheckedChanged);
+			//
 			// frmMain
 			//
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->ClientSize = System::Drawing::Size(422, 271);
+			this->Controls->Add(this->chkOnTop);
 			this->Controls->Add(this->btnLog10);
 			this->Controls->Add(this->btnLn);
 			this->Controls->Add(this->btnFac);
@@ -467,6 +483,9 @@ namespace CalculatorCLR {
 		unsigned luOne = unsigned::Parse(txtOne->Text);
 		txtTwo->Text = "0";
 		txtResult->Text = (faculty(luOne)).ToString();
+		if (txtResult->Text == "0") {
+			txtResult->Text = "out of range";
+		}
 	}
 	private: System::Void tmrPerfCounter_Tick(System::Object^ sender, System::EventArgs^ e) {
 		toolStripProgressBar1->Value = perfcCPU->NextValue();
@@ -510,6 +529,9 @@ namespace CalculatorCLR {
 		else {
 			frmMain::errorProviderMain->Clear();
 		}
+	}
+	private: System::Void chkOnTop_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		frmMain::TopMost = chkOnTop->Checked;
 	}
 	};
 }
