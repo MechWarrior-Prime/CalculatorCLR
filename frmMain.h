@@ -63,6 +63,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::ToolStripMenuItem^ tsmiInfo;
 	private: System::Windows::Forms::ErrorProvider^ errorProviderMain;
 	private: System::Windows::Forms::CheckBox^ chkOnTop;
+	private: System::Windows::Forms::Button^ btnSin;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -101,10 +102,11 @@ namespace CalculatorCLR {
 			this->toolTipMain = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->btnLn = (gcnew System::Windows::Forms::Button());
 			this->btnLog10 = (gcnew System::Windows::Forms::Button());
+			this->chkOnTop = (gcnew System::Windows::Forms::CheckBox());
+			this->btnSin = (gcnew System::Windows::Forms::Button());
 			this->msMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->tsmiInfo = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->errorProviderMain = (gcnew System::Windows::Forms::ErrorProvider(this->components));
-			this->chkOnTop = (gcnew System::Windows::Forms::CheckBox());
 			this->statusStrip1->SuspendLayout();
 			this->cmsClipboard->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->perfcCPU))->BeginInit();
@@ -118,10 +120,10 @@ namespace CalculatorCLR {
 				this->toolStripStatusLabel1,
 					this->toolStripProgressBar1, this->toolStripStatusLabel2
 			});
-			this->statusStrip1->Location = System::Drawing::Point(0, 249);
+			this->statusStrip1->Location = System::Drawing::Point(0, 231);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->ShowItemToolTips = true;
-			this->statusStrip1->Size = System::Drawing::Size(422, 22);
+			this->statusStrip1->Size = System::Drawing::Size(449, 22);
 			this->statusStrip1->SizingGrip = false;
 			this->statusStrip1->TabIndex = 0;
 			this->statusStrip1->Text = L"Status";
@@ -129,7 +131,7 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel1
 			//
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(152, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(166, 17);
 			this->toolStripStatusLabel1->Spring = true;
 			this->toolStripStatusLabel1->Text = L"Total CPU Usage in %: ";
 			this->toolStripStatusLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -145,7 +147,7 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel2
 			//
 			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(152, 17);
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(166, 17);
 			this->toolStripStatusLabel2->Spring = true;
 			this->toolStripStatusLabel2->Text = L"©2020 Frank G. Dahncke";
 			this->toolStripStatusLabel2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -216,7 +218,7 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->txtOne->Location = System::Drawing::Point(58, 12);
 			this->txtOne->Name = L"txtOne";
-			this->txtOne->Size = System::Drawing::Size(150, 35);
+			this->txtOne->Size = System::Drawing::Size(170, 35);
 			this->txtOne->TabIndex = 5;
 			this->txtOne->Text = L"0";
 			this->txtOne->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -228,9 +230,9 @@ namespace CalculatorCLR {
 			//
 			this->txtTwo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txtTwo->Location = System::Drawing::Point(214, 12);
+			this->txtTwo->Location = System::Drawing::Point(234, 12);
 			this->txtTwo->Name = L"txtTwo";
-			this->txtTwo->Size = System::Drawing::Size(150, 35);
+			this->txtTwo->Size = System::Drawing::Size(169, 35);
 			this->txtTwo->TabIndex = 6;
 			this->txtTwo->Text = L"0";
 			this->txtTwo->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -247,7 +249,7 @@ namespace CalculatorCLR {
 			this->txtResult->ReadOnly = true;
 			this->txtResult->ScrollBars = System::Windows::Forms::ScrollBars::Both;
 			this->txtResult->ShortcutsEnabled = false;
-			this->txtResult->Size = System::Drawing::Size(306, 62);
+			this->txtResult->Size = System::Drawing::Size(345, 62);
 			this->txtResult->TabIndex = 7;
 			this->txtResult->Text = L"0";
 			this->txtResult->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
@@ -293,7 +295,7 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(58, 165);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(306, 38);
+			this->button1->Size = System::Drawing::Size(345, 38);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"&CLR";
 			this->toolTipMain->SetToolTip(this->button1, L"Clears all fields.");
@@ -365,12 +367,40 @@ namespace CalculatorCLR {
 			this->btnLog10->UseVisualStyleBackColor = true;
 			this->btnLog10->Click += gcnew System::EventHandler(this, &frmMain::btnLog10_Click);
 			//
+			// chkOnTop
+			//
+			this->chkOnTop->AutoSize = true;
+			this->chkOnTop->FlatStyle = System::Windows::Forms::FlatStyle::System;
+			this->chkOnTop->Location = System::Drawing::Point(62, 211);
+			this->chkOnTop->Name = L"chkOnTop";
+			this->chkOnTop->Size = System::Drawing::Size(84, 18);
+			this->chkOnTop->TabIndex = 14;
+			this->chkOnTop->Text = L"&stay on top";
+			this->toolTipMain->SetToolTip(this->chkOnTop, L"if checked, makes the calculator window stay above all others");
+			this->chkOnTop->UseVisualStyleBackColor = true;
+			this->chkOnTop->CheckedChanged += gcnew System::EventHandler(this, &frmMain::chkOnTop_CheckedChanged);
+			//
+			// btnSin
+			//
+			this->btnSin->FlatStyle = System::Windows::Forms::FlatStyle::System;
+			this->btnSin->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnSin->Location = System::Drawing::Point(370, 53);
+			this->btnSin->Name = L"btnSin";
+			this->btnSin->Size = System::Drawing::Size(33, 38);
+			this->btnSin->TabIndex = 15;
+			this->btnSin->Text = L"sin";
+			this->toolTipMain->SetToolTip(this->btnSin, L"sinus");
+			this->btnSin->UseMnemonic = false;
+			this->btnSin->UseVisualStyleBackColor = true;
+			this->btnSin->Click += gcnew System::EventHandler(this, &frmMain::btnSin_Click);
+			//
 			// msMain
 			//
 			this->msMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiInfo });
 			this->msMain->Location = System::Drawing::Point(0, 0);
 			this->msMain->Name = L"msMain";
-			this->msMain->Size = System::Drawing::Size(422, 24);
+			this->msMain->Size = System::Drawing::Size(449, 24);
 			this->msMain->TabIndex = 13;
 			this->msMain->Text = L"menuStrip1";
 			//
@@ -387,25 +417,13 @@ namespace CalculatorCLR {
 			//
 			this->errorProviderMain->ContainerControl = this;
 			//
-			// chkOnTop
-			//
-			this->chkOnTop->AutoSize = true;
-			this->chkOnTop->FlatStyle = System::Windows::Forms::FlatStyle::System;
-			this->chkOnTop->Location = System::Drawing::Point(62, 211);
-			this->chkOnTop->Name = L"chkOnTop";
-			this->chkOnTop->Size = System::Drawing::Size(84, 18);
-			this->chkOnTop->TabIndex = 14;
-			this->chkOnTop->Text = L"&stay on top";
-			this->toolTipMain->SetToolTip(this->chkOnTop, L"if checked, makes the calculator window stay above all others");
-			this->chkOnTop->UseVisualStyleBackColor = true;
-			this->chkOnTop->CheckedChanged += gcnew System::EventHandler(this, &frmMain::chkOnTop_CheckedChanged);
-			//
 			// frmMain
 			//
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(422, 271);
+			this->ClientSize = System::Drawing::Size(449, 253);
+			this->Controls->Add(this->btnSin);
 			this->Controls->Add(this->chkOnTop);
 			this->Controls->Add(this->btnLog10);
 			this->Controls->Add(this->btnLn);
@@ -532,6 +550,11 @@ namespace CalculatorCLR {
 	}
 	private: System::Void chkOnTop_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		frmMain::TopMost = chkOnTop->Checked;
+	}
+	private: System::Void btnSin_Click(System::Object^ sender, System::EventArgs^ e) {
+		double ldOne = double::Parse(txtOne->Text);
+		txtTwo->Text = "0";
+		txtResult->Text = (sin(ldOne)).ToString();
 	}
 	};
 }
