@@ -237,6 +237,7 @@ namespace CalculatorCLR {
 			this->txtTwo->Text = L"0";
 			this->txtTwo->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
 			this->toolTipMain->SetToolTip(this->txtTwo, L"Second number. Only used if the operation requires it.");
+			this->txtTwo->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &frmMain::txtTwo_Validating);
 			//
 			// txtResult
 			//
@@ -498,7 +499,11 @@ namespace CalculatorCLR {
 				 //  return n * faculty(n - 1);
 		   //}
 	private: System::Void btnFac_Click(System::Object^ sender, System::EventArgs^ e) {
-		unsigned luOne = unsigned::Parse(txtOne->Text);
+		unsigned luOne;
+		if (!unsigned::TryParse(txtOne->Text, luOne)) {
+			txtResult->Text = "invalid input";
+			return;
+		}
 		txtTwo->Text = "0";
 		txtResult->Text = (faculty(luOne)).ToString();
 		if (txtResult->Text == "0") {
@@ -555,6 +560,21 @@ namespace CalculatorCLR {
 		double ldOne = double::Parse(txtOne->Text);
 		txtTwo->Text = "0";
 		txtResult->Text = (sin(ldOne)).ToString();
+	}
+	private: System::Void txtTwo_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		if (!IsNumeric(txtTwo->Text)) {
+			// Cancel the event and select the text to be corrected by the user.
+
+			e->Cancel = true;
+			txtTwo->Select(0, txtTwo->Text->Length);
+
+			// Set the ErrorProvider error with the text to display.
+
+			frmMain::errorProviderMain->SetError(txtTwo, "Invalid input. Numbers only!");
+		}
+		else {
+			frmMain::errorProviderMain->Clear();
+		}
 	}
 	};
 }
