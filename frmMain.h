@@ -64,6 +64,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::ErrorProvider^ errorProviderMain;
 	private: System::Windows::Forms::CheckBox^ chkOnTop;
 	private: System::Windows::Forms::Button^ btnSin;
+	private: System::Windows::Forms::ToolStripStatusLabel^ tsslPercent;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -84,6 +85,7 @@ namespace CalculatorCLR {
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->toolStripStatusLabel1 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->toolStripProgressBar1 = (gcnew System::Windows::Forms::ToolStripProgressBar());
+			this->tsslPercent = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->toolStripStatusLabel2 = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->btnAdd = (gcnew System::Windows::Forms::Button());
 			this->btnSub = (gcnew System::Windows::Forms::Button());
@@ -116,9 +118,9 @@ namespace CalculatorCLR {
 			//
 			// statusStrip1
 			//
-			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
 				this->toolStripStatusLabel1,
-					this->toolStripProgressBar1, this->toolStripStatusLabel2
+					this->toolStripProgressBar1, this->tsslPercent, this->toolStripStatusLabel2
 			});
 			this->statusStrip1->Location = System::Drawing::Point(0, 231);
 			this->statusStrip1->Name = L"statusStrip1";
@@ -131,7 +133,7 @@ namespace CalculatorCLR {
 			// toolStripStatusLabel1
 			//
 			this->toolStripStatusLabel1->Name = L"toolStripStatusLabel1";
-			this->toolStripStatusLabel1->Size = System::Drawing::Size(166, 17);
+			this->toolStripStatusLabel1->Size = System::Drawing::Size(147, 17);
 			this->toolStripStatusLabel1->Spring = true;
 			this->toolStripStatusLabel1->Text = L"Total CPU Usage in %: ";
 			this->toolStripStatusLabel1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -144,10 +146,18 @@ namespace CalculatorCLR {
 			this->toolStripProgressBar1->Style = System::Windows::Forms::ProgressBarStyle::Continuous;
 			this->toolStripProgressBar1->ToolTipText = L"Current usage of total processing power";
 			//
+			// tsslPercent
+			//
+			this->tsslPercent->AutoSize = false;
+			this->tsslPercent->Margin = System::Windows::Forms::Padding(-1, 3, 0, 2);
+			this->tsslPercent->Name = L"tsslPercent";
+			this->tsslPercent->Size = System::Drawing::Size(38, 17);
+			this->tsslPercent->Text = L"0% ";
+			//
 			// toolStripStatusLabel2
 			//
 			this->toolStripStatusLabel2->Name = L"toolStripStatusLabel2";
-			this->toolStripStatusLabel2->Size = System::Drawing::Size(166, 17);
+			this->toolStripStatusLabel2->Size = System::Drawing::Size(147, 17);
 			this->toolStripStatusLabel2->Spring = true;
 			this->toolStripStatusLabel2->Text = L"©2020 Frank G. Dahncke";
 			this->toolStripStatusLabel2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -512,6 +522,7 @@ namespace CalculatorCLR {
 	}
 	private: System::Void tmrPerfCounter_Tick(System::Object^ sender, System::EventArgs^ e) {
 		toolStripProgressBar1->Value = perfcCPU->NextValue();
+		tsslPercent->Text = toolStripProgressBar1->Value.ToString() + "% ";
 	}
 
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -557,9 +568,15 @@ namespace CalculatorCLR {
 		frmMain::TopMost = chkOnTop->Checked;
 	}
 	private: System::Void btnSin_Click(System::Object^ sender, System::EventArgs^ e) {
-		double ldOne = double::Parse(txtOne->Text);
-		txtTwo->Text = "0";
-		txtResult->Text = (sin(ldOne)).ToString();
+		try
+		{
+			double ldOne = double::Parse(txtOne->Text);
+			txtTwo->Text = "0";
+			txtResult->Text = (sin(ldOne)).ToString();
+		}
+		catch (Exception ^ ex) {
+			MessageBox::Show(ex->Message + "\n Reason: " + ex->InnerException, "Calculation Error", MessageBoxButtons::OK);
+		}
 	}
 	private: System::Void txtTwo_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 		if (!IsNumeric(txtTwo->Text)) {
