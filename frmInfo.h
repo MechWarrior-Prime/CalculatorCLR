@@ -86,7 +86,6 @@ namespace CalculatorCLR {
 		technolibCLR::TechnoClass^ tl = gcnew technolibCLR::TechnoClass;
 		String^ result = tl->currentDECDate();
 		lblInfo->Text = "Today is " + result->ToString();
-		//MessageBox::Show(result->ToString());
 	}
 	};
 }

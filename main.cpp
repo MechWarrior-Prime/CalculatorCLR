@@ -1,5 +1,6 @@
 #include "frmMain.h"
 #include "functions.h"
+#include <algorithm> // very powerful library, esp. for sorts, finds and strange stuff
 /*
 	Calculator for CLR
 	Frank G. Dahncke
