@@ -127,6 +127,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="technolibCLR">
+      <HintPath>..\technolibCLR\x64\Debug\technolibCLR.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="frmInfo.h">

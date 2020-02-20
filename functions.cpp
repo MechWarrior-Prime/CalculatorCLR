@@ -1,4 +1,8 @@
+#include <stdlib.h>
+#include <ctime>
+
 using namespace System;
+using namespace System::Text;
 
 UInt64 faculty(unsigned int n)
 {
@@ -21,4 +25,13 @@ int fibunacci(int n)
 bool IsNumeric(String^ text) {
 	double test;
 	return double::TryParse(text, test);
+}
+
+String^ Randoms(unsigned amount, unsigned  largest) {
+	StringBuilder^ sb = gcnew StringBuilder;
+	for (unsigned i = 1; i <= amount; i++) {
+		sb->Append((1 + (rand() % largest)).ToString() + " ");
+		//printf("%d ", 1 + (rand() % largest));
+	}
+	return sb->ToString();
 }

@@ -14,9 +14,11 @@ namespace CalculatorCLR {
 	/// <summary>
 	/// Zusammenfassung für frmMain
 	/// </summary>
+
 	public ref class frmMain : public System::Windows::Forms::Form
 	{
 	public:
+		technolibCLR::TechnoClass^ tl = gcnew technolibCLR::TechnoClass;
 		frmMain(void)
 		{
 			InitializeComponent();
@@ -65,6 +67,9 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::CheckBox^ chkOnTop;
 	private: System::Windows::Forms::Button^ btnSin;
 	private: System::Windows::Forms::ToolStripStatusLabel^ tsslPercent;
+	private: System::Windows::Forms::Button^ btnD6;
+	private: System::Windows::Forms::Button^ btnAD_D;
+	private: System::Windows::Forms::Button^ btnRNG;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -106,6 +111,9 @@ namespace CalculatorCLR {
 			this->btnLog10 = (gcnew System::Windows::Forms::Button());
 			this->chkOnTop = (gcnew System::Windows::Forms::CheckBox());
 			this->btnSin = (gcnew System::Windows::Forms::Button());
+			this->btnD6 = (gcnew System::Windows::Forms::Button());
+			this->btnAD_D = (gcnew System::Windows::Forms::Button());
+			this->btnRNG = (gcnew System::Windows::Forms::Button());
 			this->msMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->tsmiInfo = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->errorProviderMain = (gcnew System::Windows::Forms::ErrorProvider(this->components));
@@ -122,7 +130,7 @@ namespace CalculatorCLR {
 				this->toolStripStatusLabel1,
 					this->toolStripProgressBar1, this->tsslPercent, this->toolStripStatusLabel2
 			});
-			this->statusStrip1->Location = System::Drawing::Point(0, 231);
+			this->statusStrip1->Location = System::Drawing::Point(0, 234);
 			this->statusStrip1->Name = L"statusStrip1";
 			this->statusStrip1->ShowItemToolTips = true;
 			this->statusStrip1->Size = System::Drawing::Size(449, 22);
@@ -406,6 +414,42 @@ namespace CalculatorCLR {
 			this->btnSin->UseVisualStyleBackColor = true;
 			this->btnSin->Click += gcnew System::EventHandler(this, &frmMain::btnSin_Click);
 			//
+			// btnD6
+			//
+			this->btnD6->Location = System::Drawing::Point(152, 204);
+			this->btnD6->Name = L"btnD6";
+			this->btnD6->Size = System::Drawing::Size(37, 31);
+			this->btnD6->TabIndex = 16;
+			this->btnD6->Text = L"D6";
+			this->toolTipMain->SetToolTip(this->btnD6, L"Throw die");
+			this->btnD6->UseVisualStyleBackColor = true;
+			this->btnD6->Click += gcnew System::EventHandler(this, &frmMain::btnD6_Click);
+			//
+			// btnAD_D
+			//
+			this->btnAD_D->Location = System::Drawing::Point(195, 204);
+			this->btnAD_D->Name = L"btnAD_D";
+			this->btnAD_D->Size = System::Drawing::Size(52, 31);
+			this->btnAD_D->TabIndex = 17;
+			this->btnAD_D->Text = L"AD&D";
+			this->toolTipMain->SetToolTip(this->btnAD_D, L"Throw AD&D die");
+			this->btnAD_D->UseMnemonic = false;
+			this->btnAD_D->UseVisualStyleBackColor = true;
+			this->btnAD_D->Click += gcnew System::EventHandler(this, &frmMain::btnAD_D_Click);
+			//
+			// btnRNG
+			//
+			this->btnRNG->Location = System::Drawing::Point(253, 204);
+			this->btnRNG->Name = L"btnRNG";
+			this->btnRNG->Size = System::Drawing::Size(52, 31);
+			this->btnRNG->TabIndex = 18;
+			this->btnRNG->Text = L"RNG";
+			this->toolTipMain->SetToolTip(this->btnRNG, L"Generate random numbers. First operand is number of numbers, second operand is th"
+				L"e maximum value.");
+			this->btnRNG->UseMnemonic = false;
+			this->btnRNG->UseVisualStyleBackColor = true;
+			this->btnRNG->Click += gcnew System::EventHandler(this, &frmMain::btnRNG_Click);
+			//
 			// msMain
 			//
 			this->msMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiInfo });
@@ -433,7 +477,10 @@ namespace CalculatorCLR {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(449, 253);
+			this->ClientSize = System::Drawing::Size(449, 256);
+			this->Controls->Add(this->btnRNG);
+			this->Controls->Add(this->btnAD_D);
+			this->Controls->Add(this->btnD6);
 			this->Controls->Add(this->btnSin);
 			this->Controls->Add(this->chkOnTop);
 			this->Controls->Add(this->btnLog10);
@@ -459,6 +506,7 @@ namespace CalculatorCLR {
 			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Technocalc CLR";
+			this->Load += gcnew System::EventHandler(this, &frmMain::frmMain_Load);
 			this->statusStrip1->ResumeLayout(false);
 			this->statusStrip1->PerformLayout();
 			this->cmsClipboard->ResumeLayout(false);
@@ -521,7 +569,7 @@ namespace CalculatorCLR {
 		}
 	}
 	private: System::Void tmrPerfCounter_Tick(System::Object^ sender, System::EventArgs^ e) {
-		toolStripProgressBar1->Value = perfcCPU->NextValue();
+		toolStripProgressBar1->Value = (int)perfcCPU->NextValue();
 		tsslPercent->Text = toolStripProgressBar1->Value.ToString() + "% ";
 	}
 
@@ -591,6 +639,38 @@ namespace CalculatorCLR {
 		}
 		else {
 			frmMain::errorProviderMain->Clear();
+		}
+	}
+	private: System::Void frmMain_Load(System::Object^ sender, System::EventArgs^ e) {
+		tl->InitRNG();
+	}
+	private: System::Void btnD6_Click(System::Object^ sender, System::EventArgs^ e) {
+		txtResult->Text = tl->rollDie().ToString() + " rolled";
+	}
+	private: System::Void btnAD_D_Click(System::Object^ sender, System::EventArgs^ e) {
+		unsigned result;
+		try
+		{
+			unsigned sides = unsigned::Parse(txtOne->Text);
+			result = tl->rollAD_D_Die(sides);
+		}
+		catch (Exception ^ ex)
+		{
+			txtResult->Text = "ERR";
+			MessageBox::Show("Legal values are 2..100.", "Illegal Input", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			button1->PerformClick();
+		}
+		if (result == 0) {
+			txtResult->Text = "Illegal input. Legal values are 2..100.";
+		}
+	}
+	private: System::Void btnRNG_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			txtResult->Text = Randoms(unsigned::Parse(txtOne->Text), unsigned::Parse(txtTwo->Text));
+		}
+		catch (Exception ^ ex)
+		{
+			txtResult->Text = "ERROR: " + ex->Message;
 		}
 	}
 	};

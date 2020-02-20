@@ -8,9 +8,6 @@ namespace CalculatorCLR {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	/// <summary>
-	/// Zusammenfassung für frmInfo
-	/// </summary>
 	public ref class frmInfo : public System::Windows::Forms::Form
 	{
 	public:
@@ -42,7 +39,7 @@ namespace CalculatorCLR {
 		/// <summary>
 		/// Erforderliche Designervariable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -56,14 +53,15 @@ namespace CalculatorCLR {
 			//
 			// lblInfo
 			//
-			this->lblInfo->AutoSize = true;
-			this->lblInfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lblInfo->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->lblInfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lblInfo->Location = System::Drawing::Point(90, 103);
+			this->lblInfo->Location = System::Drawing::Point(0, 0);
 			this->lblInfo->Name = L"lblInfo";
-			this->lblInfo->Size = System::Drawing::Size(104, 55);
+			this->lblInfo->Size = System::Drawing::Size(284, 261);
 			this->lblInfo->TabIndex = 0;
 			this->lblInfo->Text = L"Info";
+			this->lblInfo->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			//
 			// frmInfo
 			//
@@ -76,12 +74,19 @@ namespace CalculatorCLR {
 			this->MinimizeBox = false;
 			this->Name = L"frmInfo";
 			this->ShowInTaskbar = false;
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"frmInfo";
 			this->TopMost = true;
+			this->Load += gcnew System::EventHandler(this, &frmInfo::frmInfo_Load);
 			this->ResumeLayout(false);
-			this->PerformLayout();
 		}
 #pragma endregion
+	private: System::Void frmInfo_Load(System::Object^ sender, System::EventArgs^ e) {
+		//frmInfo::Parent = IntPtr(frmMain::handle);
+		technolibCLR::TechnoClass^ tl = gcnew technolibCLR::TechnoClass;
+		String^ result = tl->currentDECDate();
+		lblInfo->Text = "Today is " + result->ToString();
+		//MessageBox::Show(result->ToString());
+	}
 	};
 }
