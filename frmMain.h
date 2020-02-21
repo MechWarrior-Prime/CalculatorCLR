@@ -2,6 +2,7 @@
 #include <math.h>
 #include "functions.h"
 #include "frmInfo.h"
+#include "files.h"
 
 namespace CalculatorCLR {
 	using namespace System;
@@ -70,6 +71,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::Button^ btnD6;
 	private: System::Windows::Forms::Button^ btnAD_D;
 	private: System::Windows::Forms::Button^ btnRNG;
+	private: System::Windows::Forms::Button^ btnSave;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -114,6 +116,7 @@ namespace CalculatorCLR {
 			this->btnD6 = (gcnew System::Windows::Forms::Button());
 			this->btnAD_D = (gcnew System::Windows::Forms::Button());
 			this->btnRNG = (gcnew System::Windows::Forms::Button());
+			this->btnSave = (gcnew System::Windows::Forms::Button());
 			this->msMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->tsmiInfo = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->errorProviderMain = (gcnew System::Windows::Forms::ErrorProvider(this->components));
@@ -450,6 +453,18 @@ namespace CalculatorCLR {
 			this->btnRNG->UseVisualStyleBackColor = true;
 			this->btnRNG->Click += gcnew System::EventHandler(this, &frmMain::btnRNG_Click);
 			//
+			// btnSave
+			//
+			this->btnSave->Location = System::Drawing::Point(312, 204);
+			this->btnSave->Name = L"btnSave";
+			this->btnSave->Size = System::Drawing::Size(91, 31);
+			this->btnSave->TabIndex = 19;
+			this->btnSave->Text = L"Save";
+			this->toolTipMain->SetToolTip(this->btnSave, L"Saves the result to a file");
+			this->btnSave->UseMnemonic = false;
+			this->btnSave->UseVisualStyleBackColor = true;
+			this->btnSave->Click += gcnew System::EventHandler(this, &frmMain::btnSave_Click);
+			//
 			// msMain
 			//
 			this->msMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiInfo });
@@ -478,6 +493,7 @@ namespace CalculatorCLR {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->ClientSize = System::Drawing::Size(449, 256);
+			this->Controls->Add(this->btnSave);
 			this->Controls->Add(this->btnRNG);
 			this->Controls->Add(this->btnAD_D);
 			this->Controls->Add(this->btnD6);
@@ -671,6 +687,17 @@ namespace CalculatorCLR {
 		catch (Exception ^ ex)
 		{
 			txtResult->Text = "ERROR: " + ex->Message;
+		}
+	}
+	private: System::Void btnSave_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ lsResult = AskForSaveFileName("Save the result", "txt");
+		if (lsResult != "") {
+			try {
+				System::IO::File::WriteAllText(lsResult, txtResult->Text);
+			}
+			catch (Exception ^ ex) {
+				MessageBox::Show(ex->Message);
+			}
 		}
 	}
 	};

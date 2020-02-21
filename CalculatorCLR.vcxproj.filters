@@ -30,6 +30,9 @@
     <ClCompile Include="functions.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="files.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="frmMain.h">
@@ -39,6 +42,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="frmInfo.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="files.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

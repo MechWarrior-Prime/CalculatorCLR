@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="files.cpp" />
     <ClCompile Include="frmInfo.cpp" />
     <ClCompile Include="frmMain.cpp" />
     <ClCompile Include="functions.cpp" />
@@ -132,6 +133,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="files.h" />
     <ClInclude Include="frmInfo.h">
       <FileType>CppForm</FileType>
     </ClInclude>
