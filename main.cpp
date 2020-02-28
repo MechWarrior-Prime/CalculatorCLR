@@ -4,12 +4,13 @@
 /*
 	Calculator for CLR
 	Frank G. Dahncke
-	Build 0012
+	Build 0013
 	11-FEB-2020	1.0		creation
 	12-FEB-2020	1.1		faculty
 	13-FEB-2020 1.2		info window
 	13-FEB-2020	1.2.1	input error handling
 	20-FEB-2020 1.3		now uses technolibCLR
+	28-FEB-2020	1.3.1	Byte Display
 */
 using namespace System;
 using namespace System::Windows::Forms;

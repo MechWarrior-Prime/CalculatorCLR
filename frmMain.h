@@ -72,6 +72,7 @@ namespace CalculatorCLR {
 	private: System::Windows::Forms::Button^ btnAD_D;
 	private: System::Windows::Forms::Button^ btnRNG;
 	private: System::Windows::Forms::Button^ btnSave;
+	private: System::Windows::Forms::Button^ btnByteDisplay;
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -117,6 +118,7 @@ namespace CalculatorCLR {
 			this->btnAD_D = (gcnew System::Windows::Forms::Button());
 			this->btnRNG = (gcnew System::Windows::Forms::Button());
 			this->btnSave = (gcnew System::Windows::Forms::Button());
+			this->btnByteDisplay = (gcnew System::Windows::Forms::Button());
 			this->msMain = (gcnew System::Windows::Forms::MenuStrip());
 			this->tsmiInfo = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->errorProviderMain = (gcnew System::Windows::Forms::ErrorProvider(this->components));
@@ -317,7 +319,7 @@ namespace CalculatorCLR {
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(58, 165);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(345, 38);
+			this->button1->Size = System::Drawing::Size(247, 38);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"&CLR";
 			this->toolTipMain->SetToolTip(this->button1, L"Clears all fields.");
@@ -465,6 +467,17 @@ namespace CalculatorCLR {
 			this->btnSave->UseVisualStyleBackColor = true;
 			this->btnSave->Click += gcnew System::EventHandler(this, &frmMain::btnSave_Click);
 			//
+			// btnByteDisplay
+			//
+			this->btnByteDisplay->Location = System::Drawing::Point(311, 165);
+			this->btnByteDisplay->Name = L"btnByteDisplay";
+			this->btnByteDisplay->Size = System::Drawing::Size(91, 38);
+			this->btnByteDisplay->TabIndex = 20;
+			this->btnByteDisplay->Text = L"&Byte Display";
+			this->toolTipMain->SetToolTip(this->btnByteDisplay, L"Displays an unsigned integer number as bytws, Mbytes etc.");
+			this->btnByteDisplay->UseVisualStyleBackColor = true;
+			this->btnByteDisplay->Click += gcnew System::EventHandler(this, &frmMain::btnByteDisplay_Click);
+			//
 			// msMain
 			//
 			this->msMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->tsmiInfo });
@@ -493,6 +506,7 @@ namespace CalculatorCLR {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
 			this->ClientSize = System::Drawing::Size(449, 256);
+			this->Controls->Add(this->btnByteDisplay);
 			this->Controls->Add(this->btnSave);
 			this->Controls->Add(this->btnRNG);
 			this->Controls->Add(this->btnAD_D);
@@ -699,6 +713,15 @@ namespace CalculatorCLR {
 			catch (Exception ^ ex) {
 				MessageBox::Show(ex->Message, "Save failed");
 			}
+		}
+	}
+	private: System::Void btnByteDisplay_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			txtResult->Text = tl->ByteDisplay(Convert::ToUInt64(txtOne->Text));
+		}
+		catch (Exception ^ ex)
+		{
+			txtResult->Text = "ERROR: " + ex->Message;
 		}
 	}
 	};
