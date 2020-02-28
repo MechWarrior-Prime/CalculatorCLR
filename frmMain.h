@@ -609,9 +609,10 @@ namespace CalculatorCLR {
 	private: System::Void tsmiInfo_Click(System::Object^ sender, System::EventArgs^ e) {
 		MessageBox::Show("Info coming up!", "Techno says", MessageBoxButtons::OK);
 		Form^ info = gcnew frmInfo;
-		//info->Parent = frmMain::Handle;
-		info->StartPosition = FormStartPosition::CenterParent;
-		info->Show();
+		//info->Parent = this;//->Handle;
+		/*info->StartPosition = FormStartPosition::CenterParent;
+		info->Show(this);*/
+		info->ShowDialog();
 	}
 	private: System::Void txtOne_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 		if (!IsNumeric(txtOne->Text)) {
@@ -693,10 +694,10 @@ namespace CalculatorCLR {
 		String^ lsResult = AskForSaveFileName("Save the result", "txt");
 		if (lsResult != "") {
 			try {
-				System::IO::File::WriteAllText(lsResult, txtResult->Text);
+				System::IO::File::WriteAllText(lsResult, txtResult->Text, System::Text::Encoding::Default);
 			}
 			catch (Exception ^ ex) {
-				MessageBox::Show(ex->Message);
+				MessageBox::Show(ex->Message, "Save failed");
 			}
 		}
 	}
